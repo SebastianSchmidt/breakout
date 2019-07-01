@@ -1,7 +1,7 @@
 import Rectangle from './rectangle'
 import Point from './point'
 
-describe('constructor(topLeft, width, height)', () => {
+describe('constructor', () => {
   it('creates object with valid parameters', () => {
     const topLeft = new Point(2, 3)
     const width = 10

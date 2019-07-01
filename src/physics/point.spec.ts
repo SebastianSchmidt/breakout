@@ -1,6 +1,6 @@
 import Point from './point'
 
-describe('constructor(x, y)', () => {
+describe('constructor', () => {
   it('creates object with valid x- and y-coordinates', () => {
     const point = new Point(5, 3)
     expect(point.x).toBe(5)

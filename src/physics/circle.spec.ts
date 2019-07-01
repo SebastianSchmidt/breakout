@@ -1,7 +1,7 @@
 import Circle from './circle'
 import Point from './point'
 
-describe('constructor(center, radius)', () => {
+describe('constructor', () => {
   it('creates object with valid center and radius', () => {
     const center = new Point(4, 2.5)
     const radius = 1.73
