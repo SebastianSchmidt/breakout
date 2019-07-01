@@ -11,7 +11,7 @@ export default class Point {
     return this._x
   }
 
-  set x (x) {
+  set x (x: number) {
     this._x = check(x, 'x')
   }
 
@@ -19,8 +19,12 @@ export default class Point {
     return this._y
   }
 
-  set y (y) {
+  set y (y: number) {
     this._y = check(y, 'y')
+  }
+
+  clone () {
+    return new Point(this.x, this.y)
   }
 }
 
