@@ -2,9 +2,9 @@ import Point from '../point'
 import Rectangle from '../rectangle'
 
 export default function (point: Point, rectangle: Rectangle) {
-  const minX = rectangle.topLeft.x
+  const minX = rectangle.corners.topLeft.x
   const maxX = minX + rectangle.width
-  const minY = rectangle.topLeft.y
+  const minY = rectangle.corners.topLeft.y
   const maxY = minY + rectangle.height
 
   const x = point.x
