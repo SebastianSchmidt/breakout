@@ -1,4 +1,5 @@
 import Point from './point'
+import { requirePositiveNumber } from './utils'
 
 export default class Circle {
   public _center: Point
@@ -6,7 +7,7 @@ export default class Circle {
 
   constructor (center: Point, radius: number) {
     this._center = center.clone()
-    this._radius = checkRadius(radius)
+    this._radius = requirePositiveNumber(radius, 'radius')
   }
 
   get center () {
@@ -22,18 +23,10 @@ export default class Circle {
   }
 
   set radius (radius: number) {
-    this._radius = checkRadius(radius)
+    this._radius = requirePositiveNumber(radius, 'radius')
   }
 
   clone () {
     return new Circle(this.center, this.radius)
-  }
-}
-
-const checkRadius = (value: number) => {
-  if (value > 0) {
-    return value
-  } else {
-    throw new TypeError('radius must be a number greater than zero: ' + value + ' (' + typeof value + ')')
   }
 }

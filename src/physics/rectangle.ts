@@ -1,4 +1,5 @@
 import Point from './point'
+import { requirePositiveNumber } from './utils'
 
 export default class Rectangle {
   public topLeft: Point
@@ -7,8 +8,8 @@ export default class Rectangle {
 
   constructor (topLeft: Point, width: number, height: number) {
     this.topLeft = topLeft.clone()
-    this._width = check(width, 'width')
-    this._height = check(height, 'height')
+    this._width = requirePositiveNumber(width, 'width')
+    this._height = requirePositiveNumber(height, 'height')
   }
 
   get width () {
@@ -16,7 +17,7 @@ export default class Rectangle {
   }
 
   set width (width) {
-    this._width = check(width, 'width')
+    this._width = requirePositiveNumber(width, 'width')
   }
 
   get height () {
@@ -24,14 +25,6 @@ export default class Rectangle {
   }
 
   set height (height) {
-    this._height = check(height, 'height')
-  }
-}
-
-const check = (value: number, name: string) => {
-  if (value > 0) {
-    return value
-  } else {
-    throw new TypeError(name + ' must be a number greater than zero: ' + value + ' (' + typeof value + ')')
+    this._height = requirePositiveNumber(height, 'height')
   }
 }

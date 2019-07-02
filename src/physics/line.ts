@@ -1,4 +1,5 @@
 import Point from './point'
+import { requirePositiveNumber } from './utils'
 
 export default class Line {
   private _start: Point
@@ -7,7 +8,7 @@ export default class Line {
 
   constructor (start: Point, length: number, orientation: Orientation) {
     this._start = start.clone()
-    this._length = checkLength(length)
+    this._length = requirePositiveNumber(length, 'length')
     this._orientation = orientation
   }
 
@@ -24,7 +25,7 @@ export default class Line {
   }
 
   set length (length) {
-    this._length = checkLength(length)
+    this._length = requirePositiveNumber(length, 'length')
   }
 
   get orientation () {
@@ -43,12 +44,4 @@ export default class Line {
 export enum Orientation {
   Horizontal,
   Vertical
-}
-
-const checkLength = (value: number) => {
-  if (value > 0) {
-    return value
-  } else {
-    throw new TypeError('length must be a number greater than zero: ' + value + ' (' + typeof value + ')')
-  }
 }

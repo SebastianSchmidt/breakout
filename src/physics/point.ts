@@ -1,10 +1,12 @@
+import { requireNonNegativeNumber } from './utils'
+
 export default class Point {
   private _x: number
   private _y: number
 
   constructor (x: number, y: number) {
-    this._x = check(x, 'x')
-    this._y = check(y, 'y')
+    this._x = requireNonNegativeNumber(x, 'x')
+    this._y = requireNonNegativeNumber(y, 'y')
   }
 
   get x () {
@@ -12,7 +14,7 @@ export default class Point {
   }
 
   set x (x: number) {
-    this._x = check(x, 'x')
+    this._x = requireNonNegativeNumber(x, 'x')
   }
 
   get y () {
@@ -20,18 +22,10 @@ export default class Point {
   }
 
   set y (y: number) {
-    this._y = check(y, 'y')
+    this._y = requireNonNegativeNumber(y, 'y')
   }
 
   clone () {
     return new Point(this.x, this.y)
-  }
-}
-
-const check = (value: number, name: string) => {
-  if (value >= 0) {
-    return value
-  } else {
-    throw new TypeError(name + ' must be a number greater than or equal to zero: ' + value + ' (' + typeof value + ')')
   }
 }
