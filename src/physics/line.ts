@@ -6,7 +6,7 @@ export default class Line {
   private _length: number = 0
   private _orientation: Orientation
 
-  constructor (start: Point, length: number, orientation: Orientation) {
+  constructor (start: Point | Readonly<Point>, length: number, orientation: Orientation) {
     this._start = start.clone()
     this.length = length
     this._orientation = orientation

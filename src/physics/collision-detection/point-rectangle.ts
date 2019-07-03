@@ -1,7 +1,7 @@
 import Point from '../point'
 import Rectangle from '../rectangle'
 
-export default function (point: Point, rectangle: Rectangle) {
+export default function (point: Point | Readonly<Point>, rectangle: Rectangle | Readonly<Rectangle>) {
   const minX = rectangle.corners.topLeft.x
   const maxX = minX + rectangle.width
   const minY = rectangle.corners.topLeft.y

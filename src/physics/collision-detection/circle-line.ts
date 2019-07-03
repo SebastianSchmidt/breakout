@@ -4,7 +4,7 @@ import Line, { Orientation } from '../line'
 const Horizontal = Orientation.Horizontal
 const Vertical = Orientation.Vertical
 
-export default function (circle: Circle, line: Line) {
+export default function (circle: Circle | Readonly<Circle>, line: Line | Readonly<Line>) {
   const ac: Vector = [
     circle.center.x - line.start.x,
     circle.center.y - line.start.y

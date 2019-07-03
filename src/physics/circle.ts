@@ -5,7 +5,7 @@ export default class Circle {
   public _center: Point
   private _radius: number = 0
 
-  constructor (center: Point, radius: number) {
+  constructor (center: Point | Readonly<Point>, radius: number) {
     this._center = center.clone()
     this.radius = radius
   }
