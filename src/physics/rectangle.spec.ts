@@ -2,126 +2,155 @@ import Rectangle from './rectangle'
 import Point from './point'
 
 describe('constructor', () => {
-  test('creates object with valid parameters', () => {
-    const topLeft = new Point(2, 3)
-    const width = 10
-    const height = 5
+  describe('given valid width and height', () => {
+    test('creates object', () => {
+      const topLeft = new Point(2, 3)
+      const width = 10
+      const height = 5
 
-    const rectangle = new Rectangle(topLeft, width, height)
+      const rectangle = new Rectangle(topLeft, width, height)
 
-    expect(rectangle.corners.topLeft).toEqual(topLeft)
-    expect(rectangle.corners.topLeft).not.toBe(topLeft)
-    expect(rectangle.width).toEqual(width)
-    expect(rectangle.height).toEqual(height)
+      expect(rectangle.width).toEqual(width)
+      expect(rectangle.height).toEqual(height)
+
+      expect(rectangle.corners.topLeft).toEqual(topLeft)
+      expect(rectangle.corners.topLeft).not.toBe(topLeft)
+
+      expect(rectangle.corners.topRight.x).toBe(12)
+      expect(rectangle.corners.topRight.y).toBe(3)
+
+      expect(rectangle.corners.bottomLeft.x).toBe(2)
+      expect(rectangle.corners.bottomLeft.y).toBe(8)
+
+      expect(rectangle.corners.bottomRight.x).toBe(12)
+      expect(rectangle.corners.bottomRight.y).toBe(8)
+    })
   })
 
-  test('throws TypeError with zero width', () => {
-    const topLeft = new Point(2, 3)
-    expect(() => new Rectangle(topLeft, 0, 10)).toThrow(new TypeError(
-      'width must be a number greater than zero: 0 (number)'))
+  describe('given invalid width', () => {
+    test('with zero width throws TypeError', () => {
+      const topLeft = new Point(2, 3)
+      expect(() => new Rectangle(topLeft, 0, 10)).toThrow(new TypeError(
+        'width must be a number greater than zero: 0 (number)'))
+    })
+
+    test('with negative width throws TypeError', () => {
+      const topLeft = new Point(2, 3)
+      expect(() => new Rectangle(topLeft, -1, 10)).toThrow(new TypeError(
+        'width must be a number greater than zero: -1 (number)'))
+    })
   })
 
-  test('throws TypeError with negative width', () => {
-    const topLeft = new Point(2, 3)
-    expect(() => new Rectangle(topLeft, -1, 10)).toThrow(new TypeError(
-      'width must be a number greater than zero: -1 (number)'))
-  })
+  describe('given invalid height', () => {
+    test('with zero height throws TypeError', () => {
+      const topLeft = new Point(2, 3)
+      expect(() => new Rectangle(topLeft, 10, 0)).toThrow(new TypeError(
+        'height must be a number greater than zero: 0 (number)'))
+    })
 
-  test('throws TypeError with zero height', () => {
-    const topLeft = new Point(2, 3)
-    expect(() => new Rectangle(topLeft, 10, 0)).toThrow(new TypeError(
-      'height must be a number greater than zero: 0 (number)'))
-  })
-
-  test('throws TypeError with negative height', () => {
-    const topLeft = new Point(2, 3)
-    expect(() => new Rectangle(topLeft, 10, -1)).toThrow(new TypeError(
-      'height must be a number greater than zero: -1 (number)'))
+    test('with negative height throws TypeError', () => {
+      const topLeft = new Point(2, 3)
+      expect(() => new Rectangle(topLeft, 10, -1)).toThrow(new TypeError(
+        'height must be a number greater than zero: -1 (number)'))
+    })
   })
 })
 
-describe('property width', () => {
-  test('positive value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    rectangle.width = 42
-    expect(rectangle.width).toBe(42)
+describe('moveTo', () => {
+  describe('given valid x- and y-coordinates', () => {
+    test('moves rectangle', () => {
+      const rectangle = new Rectangle(new Point(2, 3), 10, 5)
+
+      rectangle.moveTo(7, 5)
+
+      expect(rectangle.corners.topLeft.x).toBe(7)
+      expect(rectangle.corners.topLeft.y).toBe(5)
+
+      expect(rectangle.corners.topRight.x).toBe(17)
+      expect(rectangle.corners.topRight.y).toBe(5)
+
+      expect(rectangle.corners.bottomLeft.x).toBe(7)
+      expect(rectangle.corners.bottomLeft.y).toBe(10)
+
+      expect(rectangle.corners.bottomRight.x).toBe(17)
+      expect(rectangle.corners.bottomRight.y).toBe(10)
+    })
   })
 
-  test('throws TypeError with zero value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    expect(() => { rectangle.width = 0 }).toThrow(new TypeError(
-      'width must be a number greater than zero: 0 (number)'))
+  describe('given invalid x-coordinate', () => {
+    test('with negative x throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(2, 3), 10, 5)
+      expect(() => rectangle.moveTo(-1, 5)).toThrow(new TypeError(
+        'x must be a number greater than or equal to zero: -1 (number)'))
+    })
   })
 
-  test('throws TypeError with negative value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    expect(() => { rectangle.width = -1 }).toThrow(new TypeError(
-      'width must be a number greater than zero: -1 (number)'))
+  describe('given invalid y-coordinate', () => {
+    test('with negative y throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(2, 3), 10, 5)
+      expect(() => rectangle.moveTo(5, -1)).toThrow(new TypeError(
+        'y must be a number greater than or equal to zero: -1 (number)'))
+    })
   })
 })
 
-describe('property height', () => {
-  test('positive value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    rectangle.height = 42
-    expect(rectangle.height).toBe(42)
+describe('resize', () => {
+  describe('given valid width and height', () => {
+    test('resizes rectangle', () => {
+      const rectangle = new Rectangle(new Point(2, 3), 10, 5)
+
+      rectangle.resize(4, 7)
+
+      expect(rectangle.corners.topLeft.x).toBe(2)
+      expect(rectangle.corners.topLeft.y).toBe(3)
+
+      expect(rectangle.corners.topRight.x).toBe(6)
+      expect(rectangle.corners.topRight.y).toBe(3)
+
+      expect(rectangle.corners.bottomLeft.x).toBe(2)
+      expect(rectangle.corners.bottomLeft.y).toBe(10)
+
+      expect(rectangle.corners.bottomRight.x).toBe(6)
+      expect(rectangle.corners.bottomRight.y).toBe(10)
+    })
   })
 
-  test('throws TypeError with zero value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    expect(() => { rectangle.height = 0 }).toThrow(new TypeError(
-      'height must be a number greater than zero: 0 (number)'))
+  describe('given invalid width', () => {
+    test('with zero width throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(1, 2), 3, 4)
+      expect(() => rectangle.resize(0, 5)).toThrow(new TypeError(
+        'width must be a number greater than zero: 0 (number)'))
+    })
+
+    test('with negative width throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(1, 2), 3, 4)
+      expect(() => rectangle.resize(-1, 5)).toThrow(new TypeError(
+        'width must be a number greater than zero: -1 (number)'))
+    })
   })
 
-  test('throws TypeError with negative value', () => {
-    const rectangle = new Rectangle(new Point(0, 0), 1, 1)
-    expect(() => { rectangle.height = -1 }).toThrow(new TypeError(
-      'height must be a number greater than zero: -1 (number)'))
+  describe('given invalid height', () => {
+    test('with zero height throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(1, 2), 3, 4)
+      expect(() => rectangle.resize(5, 0)).toThrow(new TypeError(
+        'height must be a number greater than zero: 0 (number)'))
+    })
+
+    test('with negative height throws TypeError', () => {
+      const rectangle = new Rectangle(new Point(1, 2), 3, 4)
+      expect(() => rectangle.resize(5, -1)).toThrow(new TypeError(
+        'height must be a number greater than zero: -1 (number)'))
+    })
   })
 })
 
-describe('property corners', () => {
-  const rectangle = new Rectangle(new Point(1, 2), 3, 4)
-  const topLeft = rectangle.corners.topLeft.clone()
-  const { topRight, bottomLeft, bottomRight } = rectangle.corners
-
-  test('top left', () => {
-    expect(topLeft).toEqual(new Point(1, 2))
-  })
-
-  test('top Right', () => {
-    expect(topRight).toEqual(new Point(4, 2))
-  })
-
-  test('bottom left', () => {
-    expect(bottomLeft).toEqual(new Point(1, 6))
-  })
-
-  test('bottom right', () => {
-    expect(bottomRight).toEqual(new Point(4, 6))
-  })
-
-  describe('changes when rectangle position changes', () => {
-    rectangle.corners.topLeft.x = 5
-    rectangle.corners.topLeft.y = 3
-
-    const topLeft = rectangle.corners.topLeft.clone()
-    const { topRight, bottomLeft, bottomRight } = rectangle.corners
-
-    test('top left', () => {
-      expect(topLeft).toEqual(new Point(5, 3))
-    })
-
-    test('top Right', () => {
-      expect(topRight).toEqual(new Point(8, 3))
-    })
-
-    test('bottom left', () => {
-      expect(bottomLeft).toEqual(new Point(5, 7))
-    })
-
-    test('bottom right', () => {
-      expect(bottomRight).toEqual(new Point(8, 7))
-    })
+describe('clone', () => {
+  test('creates a new rectangle', () => {
+    const original = new Rectangle(new Point(1, 2), 3, 4)
+    const cloned = original.clone()
+    expect(cloned).toEqual(original)
+    expect(cloned).not.toBe(original)
+    expect(cloned.corners).not.toBe(original.corners)
+    expect(cloned.corners.topLeft).not.toBe(original.corners.topLeft)
   })
 })
