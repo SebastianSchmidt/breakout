@@ -2,7 +2,7 @@ import Rectangle from './rectangle'
 import Point from './point'
 
 describe('constructor', () => {
-  it('creates object with valid parameters', () => {
+  test('creates object with valid parameters', () => {
     const topLeft = new Point(2, 3)
     const width = 10
     const height = 5
@@ -15,25 +15,25 @@ describe('constructor', () => {
     expect(rectangle.height).toEqual(height)
   })
 
-  it('throws TypeError with zero width', () => {
+  test('throws TypeError with zero width', () => {
     const topLeft = new Point(2, 3)
     expect(() => new Rectangle(topLeft, 0, 10)).toThrow(new TypeError(
       'width must be a number greater than zero: 0 (number)'))
   })
 
-  it('throws TypeError with negative width', () => {
+  test('throws TypeError with negative width', () => {
     const topLeft = new Point(2, 3)
     expect(() => new Rectangle(topLeft, -1, 10)).toThrow(new TypeError(
       'width must be a number greater than zero: -1 (number)'))
   })
 
-  it('throws TypeError with zero height', () => {
+  test('throws TypeError with zero height', () => {
     const topLeft = new Point(2, 3)
     expect(() => new Rectangle(topLeft, 10, 0)).toThrow(new TypeError(
       'height must be a number greater than zero: 0 (number)'))
   })
 
-  it('throws TypeError with negative height', () => {
+  test('throws TypeError with negative height', () => {
     const topLeft = new Point(2, 3)
     expect(() => new Rectangle(topLeft, 10, -1)).toThrow(new TypeError(
       'height must be a number greater than zero: -1 (number)'))
@@ -41,19 +41,19 @@ describe('constructor', () => {
 })
 
 describe('property width', () => {
-  it('positive value', () => {
+  test('positive value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     rectangle.width = 42
     expect(rectangle.width).toBe(42)
   })
 
-  it('throws TypeError with zero value', () => {
+  test('throws TypeError with zero value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     expect(() => { rectangle.width = 0 }).toThrow(new TypeError(
       'width must be a number greater than zero: 0 (number)'))
   })
 
-  it('throws TypeError with negative value', () => {
+  test('throws TypeError with negative value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     expect(() => { rectangle.width = -1 }).toThrow(new TypeError(
       'width must be a number greater than zero: -1 (number)'))
@@ -61,19 +61,19 @@ describe('property width', () => {
 })
 
 describe('property height', () => {
-  it('positive value', () => {
+  test('positive value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     rectangle.height = 42
     expect(rectangle.height).toBe(42)
   })
 
-  it('throws TypeError with zero value', () => {
+  test('throws TypeError with zero value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     expect(() => { rectangle.height = 0 }).toThrow(new TypeError(
       'height must be a number greater than zero: 0 (number)'))
   })
 
-  it('throws TypeError with negative value', () => {
+  test('throws TypeError with negative value', () => {
     const rectangle = new Rectangle(new Point(0, 0), 1, 1)
     expect(() => { rectangle.height = -1 }).toThrow(new TypeError(
       'height must be a number greater than zero: -1 (number)'))
@@ -85,19 +85,19 @@ describe('property corners', () => {
   const topLeft = rectangle.corners.topLeft.clone()
   const { topRight, bottomLeft, bottomRight } = rectangle.corners
 
-  it('top left', () => {
+  test('top left', () => {
     expect(topLeft).toEqual(new Point(1, 2))
   })
 
-  it('top Right', () => {
+  test('top Right', () => {
     expect(topRight).toEqual(new Point(4, 2))
   })
 
-  it('bottom left', () => {
+  test('bottom left', () => {
     expect(bottomLeft).toEqual(new Point(1, 6))
   })
 
-  it('bottom right', () => {
+  test('bottom right', () => {
     expect(bottomRight).toEqual(new Point(4, 6))
   })
 
@@ -108,19 +108,19 @@ describe('property corners', () => {
     const topLeft = rectangle.corners.topLeft.clone()
     const { topRight, bottomLeft, bottomRight } = rectangle.corners
 
-    it('top left', () => {
+    test('top left', () => {
       expect(topLeft).toEqual(new Point(5, 3))
     })
 
-    it('top Right', () => {
+    test('top Right', () => {
       expect(topRight).toEqual(new Point(8, 3))
     })
 
-    it('bottom left', () => {
+    test('bottom left', () => {
       expect(bottomLeft).toEqual(new Point(5, 7))
     })
 
-    it('bottom right', () => {
+    test('bottom right', () => {
       expect(bottomRight).toEqual(new Point(8, 7))
     })
   })
