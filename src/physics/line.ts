@@ -3,12 +3,12 @@ import { requirePositiveNumber } from './utils'
 
 export default class Line {
   private _start: Point
-  private _length: number
+  private _length: number = 0
   private _orientation: Orientation
 
   constructor (start: Point, length: number, orientation: Orientation) {
     this._start = start.clone()
-    this._length = requirePositiveNumber(length, 'length')
+    this.length = length
     this._orientation = orientation
   }
 
@@ -24,7 +24,7 @@ export default class Line {
     return this._length
   }
 
-  set length (length) {
+  set length (length: number) {
     this._length = requirePositiveNumber(length, 'length')
   }
 
@@ -32,7 +32,7 @@ export default class Line {
     return this._orientation
   }
 
-  set orientation (orientation) {
+  set orientation (orientation: Orientation) {
     this._orientation = orientation
   }
 
