@@ -4,34 +4,38 @@ import Point from '../point'
 
 const rectangle = new Rectangle(new Point(2, 3), 4, 2)
 
-const collision = (name: string, x: number, y: number) =>
-  it(name, () => expect(detectCollision(new Point(x, y), rectangle)).toBe(true))
+const collision = (x: number, y: number) =>
+  detectCollision(new Point(x, y), rectangle)
 
-const noCollision = (name: string, x: number, y: number) =>
-  it(name, () => expect(detectCollision(new Point(x, y), rectangle)).toBe(false))
+const testCollision = (data: number[][], expected: boolean) =>
+  test.each(data)('[%d, %d]', (x, y) =>
+    expect(collision(x, y)).toBe(expected))
 
-describe('collisions', () => {
-  collision('top edge', 4, 3)
-  collision('bottom edge', 4, 5)
-  collision('left edge', 2, 4)
-  collision('right edge', 6, 4)
+const collisions = [
+  [4, 3], // top edge
+  [4, 5], // bottom edge
+  [2, 4], // left edge
+  [6, 4], // right edge
 
-  collision('top left corner', 2, 3)
-  collision('top right corner', 6, 3)
-  collision('bottom left corner', 2, 5)
-  collision('bottom right corner', 6, 5)
+  [2, 3], // top left corner
+  [6, 3], // top right corner
+  [2, 5], // bottom left corner
+  [6, 5], // bottom right corner
 
-  collision('center', 4, 4)
-})
+  [4, 4] // center
+]
 
-describe('no collisions', () => {
-  noCollision('above', 4, 2)
-  noCollision('below', 4, 6)
-  noCollision('left', 1, 4)
-  noCollision('right', 7, 4)
+const noCollisions = [
+  [4, 2], // above
+  [4, 6], // below
+  [1, 4], // left
+  [7, 4], // right
 
-  noCollision('above & left', 1, 2)
-  noCollision('above & right', 7, 2)
-  noCollision('below & left', 1, 6)
-  noCollision('below & right', 7, 6)
-})
+  [1, 2], // above & left
+  [7, 2], // above & right
+  [1, 6], // below & left
+  [7, 6] // below & right
+]
+
+describe('collisions', () => testCollision(collisions, true))
+describe('no collisions', () => testCollision(noCollisions, false))
