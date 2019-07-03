@@ -1,12 +1,12 @@
 import { requireNonNegativeNumber } from './utils'
 
 export default class Point {
-  private _x: number
-  private _y: number
+  private _x: number = 0
+  private _y: number = 0
 
   constructor (x: number, y: number) {
-    this._x = requireNonNegativeNumber(x, 'x')
-    this._y = requireNonNegativeNumber(y, 'y')
+    this.x = x
+    this.y = y
   }
 
   get x () {
