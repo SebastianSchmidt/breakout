@@ -42,6 +42,6 @@ export default class Line {
 }
 
 export enum Orientation {
-  Horizontal,
-  Vertical
+  Horizontal = 'Horizontal',
+  Vertical = 'Vertical'
 }
