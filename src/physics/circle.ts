@@ -3,11 +3,11 @@ import { requirePositiveNumber } from './utils'
 
 export default class Circle {
   public _center: Point
-  private _radius: number
+  private _radius: number = 0
 
   constructor (center: Point, radius: number) {
     this._center = center.clone()
-    this._radius = requirePositiveNumber(radius, 'radius')
+    this.radius = radius
   }
 
   get center () {
