@@ -72,5 +72,6 @@ describe('clone', () => {
     const cloned = original.clone()
     expect(cloned).toEqual(original)
     expect(cloned).not.toBe(original)
+    expect(cloned.center).not.toBe(original.center)
   })
 })
