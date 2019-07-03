@@ -1,29 +1,38 @@
 import Rectangle from './rectangle'
 import Point from './point'
+import Line, { Orientation } from './line'
+
+const Horizontal = Orientation.Horizontal
+const Vertical = Orientation.Vertical
 
 describe('constructor', () => {
   describe('given valid width and height', () => {
-    test('creates object', () => {
+    describe('creates object', () => {
       const topLeft = new Point(2, 3)
       const width = 10
       const height = 5
-
       const rectangle = new Rectangle(topLeft, width, height)
+      const { bottomLeft, topRight } = rectangle.corners
 
-      expect(rectangle.width).toEqual(width)
-      expect(rectangle.height).toEqual(height)
+      test('width and height', () => {
+        expect(rectangle.width).toEqual(width)
+        expect(rectangle.height).toEqual(height)
+      })
 
-      expect(rectangle.corners.topLeft).toEqual(topLeft)
-      expect(rectangle.corners.topLeft).not.toBe(topLeft)
+      test('corners', () => {
+        expect(rectangle.corners.topLeft).not.toBe(topLeft)
+        expect(rectangle.corners.topLeft).toEqual(topLeft)
+        expect(rectangle.corners.topRight).toEqual(new Point(12, 3))
+        expect(rectangle.corners.bottomLeft).toEqual(new Point(2, 8))
+        expect(rectangle.corners.bottomRight).toEqual(new Point(12, 8))
+      })
 
-      expect(rectangle.corners.topRight.x).toBe(12)
-      expect(rectangle.corners.topRight.y).toBe(3)
-
-      expect(rectangle.corners.bottomLeft.x).toBe(2)
-      expect(rectangle.corners.bottomLeft.y).toBe(8)
-
-      expect(rectangle.corners.bottomRight.x).toBe(12)
-      expect(rectangle.corners.bottomRight.y).toBe(8)
+      test('edges', () => {
+        expect(rectangle.edges.top).toEqual(new Line(topLeft, width, Horizontal))
+        expect(rectangle.edges.bottom).toEqual(new Line(bottomLeft, width, Horizontal))
+        expect(rectangle.edges.left).toEqual(new Line(topLeft, height, Vertical))
+        expect(rectangle.edges.right).toEqual(new Line(topRight, height, Vertical))
+      })
     })
   })
 
@@ -58,22 +67,25 @@ describe('constructor', () => {
 
 describe('moveTo', () => {
   describe('given valid x- and y-coordinates', () => {
-    test('moves rectangle', () => {
+    describe('moves rectangle', () => {
       const rectangle = new Rectangle(new Point(2, 3), 10, 5)
-
       rectangle.moveTo(7, 5)
+      const { width, height } = rectangle
+      const { topLeft, topRight, bottomLeft } = rectangle.corners
 
-      expect(rectangle.corners.topLeft.x).toBe(7)
-      expect(rectangle.corners.topLeft.y).toBe(5)
+      test('corners', () => {
+        expect(rectangle.corners.topLeft).toEqual(new Point(7, 5))
+        expect(rectangle.corners.topRight).toEqual(new Point(17, 5))
+        expect(rectangle.corners.bottomLeft).toEqual(new Point(7, 10))
+        expect(rectangle.corners.bottomRight).toEqual(new Point(17, 10))
+      })
 
-      expect(rectangle.corners.topRight.x).toBe(17)
-      expect(rectangle.corners.topRight.y).toBe(5)
-
-      expect(rectangle.corners.bottomLeft.x).toBe(7)
-      expect(rectangle.corners.bottomLeft.y).toBe(10)
-
-      expect(rectangle.corners.bottomRight.x).toBe(17)
-      expect(rectangle.corners.bottomRight.y).toBe(10)
+      test('edges', () => {
+        expect(rectangle.edges.top).toEqual(new Line(topLeft, width, Horizontal))
+        expect(rectangle.edges.bottom).toEqual(new Line(bottomLeft, width, Horizontal))
+        expect(rectangle.edges.left).toEqual(new Line(topLeft, height, Vertical))
+        expect(rectangle.edges.right).toEqual(new Line(topRight, height, Vertical))
+      })
     })
   })
 
@@ -101,17 +113,10 @@ describe('resize', () => {
 
       rectangle.resize(4, 7)
 
-      expect(rectangle.corners.topLeft.x).toBe(2)
-      expect(rectangle.corners.topLeft.y).toBe(3)
-
-      expect(rectangle.corners.topRight.x).toBe(6)
-      expect(rectangle.corners.topRight.y).toBe(3)
-
-      expect(rectangle.corners.bottomLeft.x).toBe(2)
-      expect(rectangle.corners.bottomLeft.y).toBe(10)
-
-      expect(rectangle.corners.bottomRight.x).toBe(6)
-      expect(rectangle.corners.bottomRight.y).toBe(10)
+      expect(rectangle.corners.topLeft).toEqual(new Point(2, 3))
+      expect(rectangle.corners.topRight).toEqual(new Point(6, 3))
+      expect(rectangle.corners.bottomLeft).toEqual(new Point(2, 10))
+      expect(rectangle.corners.bottomRight).toEqual(new Point(6, 10))
     })
   })
 
