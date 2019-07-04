@@ -4,7 +4,7 @@ language: node_js
 cache: yarn
 
 script:
-  - yarn lint
+  - yarn lint --no-fix
   - yarn test
   - yarn build
 
