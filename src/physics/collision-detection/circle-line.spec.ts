@@ -1,7 +1,7 @@
 import detectCollision from './circle-line'
-import Circle from '../circle'
-import Point from '../point'
-import Line, { Orientation } from '../line'
+import Circle from '../objects/circle'
+import Point from '../objects/point'
+import Line, { Orientation } from '../objects/line'
 
 const collision = (x: number, y: number, radius: number, line: Line) =>
   detectCollision(new Circle(new Point(x, y), radius), line)

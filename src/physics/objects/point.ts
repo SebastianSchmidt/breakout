@@ -1,4 +1,4 @@
-import { requireNonNegativeNumber } from './utils'
+import { requireNonNegativeNumber } from '../utils'
 
 export default class Point {
   private _x: number = 0

@@ -1,5 +1,5 @@
-import Point from '../point'
-import Rectangle from '../rectangle'
+import Point from '../objects/point'
+import Rectangle from '../objects/rectangle'
 
 export default function (point: Point | Readonly<Point>, rectangle: Rectangle | Readonly<Rectangle>) {
   const minX = rectangle.corners.topLeft.x

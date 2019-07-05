@@ -1,5 +1,5 @@
-import Circle from '../circle'
-import Rectangle from '../rectangle'
+import Circle from '../objects/circle'
+import Rectangle from '../objects/rectangle'
 import lineCollision from './circle-line'
 import pointCollision from './point-rectangle'
 

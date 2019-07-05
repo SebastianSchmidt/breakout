@@ -1,5 +1,5 @@
-import Circle from '../circle'
-import Line, { Orientation } from '../line'
+import Circle from '../objects/circle'
+import Line, { Orientation } from '../objects/line'
 
 const Horizontal = Orientation.Horizontal
 const Vertical = Orientation.Vertical

@@ -1,7 +1,7 @@
 import detectCollision, { Type } from './circle-rectangle'
-import Rectangle from '../rectangle'
-import Point from '../point'
-import Circle from '../circle'
+import Rectangle from '../objects/rectangle'
+import Point from '../objects/point'
+import Circle from '../objects/circle'
 
 const rectangle = new Rectangle(new Point(3, 3), 8, 4)
 

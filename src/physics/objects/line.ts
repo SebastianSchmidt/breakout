@@ -1,5 +1,5 @@
 import Point from './point'
-import { requirePositiveNumber } from './utils'
+import { requirePositiveNumber } from '../utils'
 
 export default class Line {
   private _start: Point
