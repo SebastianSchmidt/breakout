@@ -1,22 +1,39 @@
 import { FIELD_WIDTH, FIELD_HEIGHT } from '../game/field'
 import State from '../game/state'
+import Brick from '../game/brick'
+import Ball from '../game/ball'
 
 export default class Engine {
   private root: HTMLElement
-  private canvas: HTMLCanvasElement
-  private context: CanvasRenderingContext2D
+  private layer: CanvasRenderingContext2D
 
   constructor (root: HTMLElement) {
-    this.root = root
-    this.canvas = document.createElement('canvas')
-    this.canvas.setAttribute('width', FIELD_WIDTH + '')
-    this.canvas.setAttribute('height', FIELD_HEIGHT + '')
-    this.context = this.initRenderingContext()
-    this.root.appendChild(this.canvas)
+    this.root = this.initRoot(root)
+    this.layer = this.createCanvas(0)
   }
 
-  private initRenderingContext () {
-    const context = this.canvas.getContext('2d')
+  private initRoot (root: HTMLElement) {
+    root.style.position = 'relative'
+    root.style.width = FIELD_WIDTH + 'px'
+    root.style.height = FIELD_HEIGHT + 'px'
+    root.style.backgroundColor = '#E0F2F1'
+    return root
+  }
+
+  private createCanvas (zIndex: number) {
+    const canvas = document.createElement('canvas')
+
+    canvas.setAttribute('width', FIELD_WIDTH + '')
+    canvas.setAttribute('height', FIELD_HEIGHT + '')
+
+    canvas.style.position = 'absolute'
+    canvas.style.top = '0'
+    canvas.style.left = '0'
+    canvas.style.zIndex = zIndex + ''
+
+    this.root.appendChild(canvas)
+
+    const context = canvas.getContext('2d')
     if (context) {
       return context
     } else {
@@ -25,68 +42,75 @@ export default class Engine {
   }
 
   render (state: State, fps?: number) {
-    this.renderBackground()
+    this.clearLayers()
     this.renderBricks(state)
     this.renderBalls(state)
     this.renderFps(fps)
   }
 
-  private renderBackground () {
-    this.context.fillStyle = '#E0F2F1'
-    this.context.fillRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
+  private clearLayers () {
+    this.layer.clearRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
   }
 
   private renderBricks (state: State) {
     for (let row of state.bricks) {
       for (let brick of row) {
-        if (!brick) {
-          continue
+        if (brick) {
+          this.renderBrick(brick)
         }
-
-        const rectangle = brick.rectangle
-
-        const gradient = this.context.createLinearGradient(
-          rectangle.corners.topLeft.x,
-          rectangle.corners.topLeft.y,
-          rectangle.corners.topLeft.x + rectangle.width,
-          rectangle.corners.topLeft.y + rectangle.height
-        )
-        gradient.addColorStop(0, '#004D40')
-        gradient.addColorStop(1, '#4DB6AC')
-        this.context.fillStyle = gradient
-
-        this.context.fillRect(
-          rectangle.corners.topLeft.x,
-          rectangle.corners.topLeft.y,
-          rectangle.width,
-          rectangle.height
-        )
       }
     }
   }
 
+  private renderBrick (brick: Brick) {
+    const layer = this.layer
+    const rectangle = brick.rectangle
+
+    const gradient = layer.createLinearGradient(
+      rectangle.corners.topLeft.x,
+      rectangle.corners.topLeft.y,
+      rectangle.corners.topLeft.x + rectangle.width,
+      rectangle.corners.topLeft.y + rectangle.height
+    )
+    gradient.addColorStop(0, '#004D40')
+    gradient.addColorStop(1, '#4DB6AC')
+    layer.fillStyle = gradient
+
+    layer.fillRect(
+      rectangle.corners.topLeft.x,
+      rectangle.corners.topLeft.y,
+      rectangle.width,
+      rectangle.height
+    )
+  }
+
   private renderBalls (state: State) {
     state.balls.forEach(ball => {
-      const circle = ball.circle
-
-      this.context.fillStyle = '#000000'
-      this.context.beginPath()
-      this.context.arc(
-        circle.center.x,
-        circle.center.y,
-        circle.radius,
-        0,
-        2 * Math.PI
-      )
-      this.context.fill()
+      this.renderBall(ball)
     })
+  }
+
+  private renderBall (ball: Ball) {
+    const layer = this.layer
+    const circle = ball.circle
+
+    layer.fillStyle = '#000000'
+    layer.beginPath()
+    layer.arc(
+      circle.center.x,
+      circle.center.y,
+      circle.radius,
+      0,
+      2 * Math.PI
+    )
+    layer.fill()
   }
 
   private renderFps (fps?: number) {
     if (fps) {
-      this.context.strokeStyle = '#000000'
-      this.context.textAlign = 'right'
-      this.context.fillText(Math.round(fps) + ' FPS', FIELD_WIDTH - 15, 25)
+      this.layer.strokeStyle = '#000000'
+      this.layer.textAlign = 'right'
+      this.layer.fillText(Math.round(fps) + ' FPS', FIELD_WIDTH - 15, 25)
     }
   }
 }

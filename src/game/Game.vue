@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="root" />
+    <div class="root" ref="root" />
     <p><button @click="pause">Pause / Resume</button></p>
   </div>
 </template>
@@ -59,3 +59,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.root, .root * {
+  margin: 0;
+  padding: 0;
+}
+
+.root {
+  display: inline-block;
+}
+</style>
