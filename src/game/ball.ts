@@ -2,8 +2,14 @@ import Circle from '../physics/objects/circle'
 import Point from '../physics/objects/point'
 import Brick from './brick'
 import rectangleCollision, { Type } from '../physics/collision-detection/circle-rectangle'
+import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
-const RADIUS = 5
+export const RADIUS = 5
+
+const MIN_X = RADIUS
+const MAX_X = FIELD_WIDTH - RADIUS
+const MIN_Y = RADIUS
+const MAX_Y = FIELD_HEIGHT - RADIUS
 
 export default class Ball {
   circle: Circle
@@ -68,7 +74,7 @@ export default class Ball {
   }
 
   private collisionFromAbove (maxY: number) {
-    this.circle.center.y = maxY - this.circle.radius
+    this.circle.center.y = Math.max(maxY - this.circle.radius, MIN_Y)
 
     if (this.velocity[1] > 0) {
       this.velocity[1] = -this.velocity[1]
@@ -76,7 +82,7 @@ export default class Ball {
   }
 
   private collisionFromRight (minX: number) {
-    this.circle.center.x = minX + this.circle.radius
+    this.circle.center.x = Math.min(minX + this.circle.radius, MAX_X)
 
     if (this.velocity[0] < 0) {
       this.velocity[0] = -this.velocity[0]
@@ -84,7 +90,7 @@ export default class Ball {
   }
 
   private collisionFromBelow (minY: number) {
-    this.circle.center.y = minY + this.circle.radius
+    this.circle.center.y = Math.min(minY + this.circle.radius, MAX_Y)
 
     if (this.velocity[1] < 0) {
       this.velocity[1] = -this.velocity[1]
@@ -92,7 +98,7 @@ export default class Ball {
   }
 
   private collisionFromLeft (maxX: number) {
-    this.circle.center.x = maxX - this.circle.radius
+    this.circle.center.x = Math.max(maxX - this.circle.radius, MIN_X)
 
     if (this.velocity[0] > 0) {
       this.velocity[0] = -this.velocity[0]
