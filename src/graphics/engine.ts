@@ -29,12 +29,15 @@ export default class Engine {
   private createCanvas (zIndex: number) {
     const canvas = document.createElement('canvas')
 
-    canvas.setAttribute('width', FIELD_WIDTH + '')
-    canvas.setAttribute('height', FIELD_HEIGHT + '')
+    const scale = window.devicePixelRatio || 1
+    canvas.width = FIELD_WIDTH * scale
+    canvas.height = FIELD_HEIGHT * scale
 
     canvas.style.position = 'absolute'
     canvas.style.top = '0'
     canvas.style.left = '0'
+    canvas.style.width = FIELD_WIDTH + 'px'
+    canvas.style.height = FIELD_HEIGHT + 'px'
     canvas.style.zIndex = zIndex + ''
 
     this.root.appendChild(canvas)
@@ -42,6 +45,7 @@ export default class Engine {
     const context = canvas.getContext('2d')
 
     if (context) {
+      context.scale(scale, scale)
       return context
     } else {
       throw new TypeError('Could not initialize rendering context.')
