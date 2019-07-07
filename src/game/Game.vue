@@ -5,7 +5,7 @@
       :width="FIELD_WIDTH"
       :height="FIELD_HEIGHT"
     />
-    <p><button @click="pause">{{ loop && loop.running ? 'Pause' : 'Resume' }}</button></p>
+    <p><button @click="pause">Pause / Resume</button></p>
   </div>
 </template>
 
@@ -19,8 +19,6 @@ import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
 export default {
   data: () => ({
-    loop: null,
-    visibilityListener: null,
     FIELD_WIDTH,
     FIELD_HEIGHT
   }),
