@@ -30,13 +30,18 @@ export default class Paddle {
     this.updateBallPositions(diff)
   }
 
-  stick (ball: Ball) {
+  stick (ball: Ball, center: boolean = false) {
     this.balls.push(ball)
 
     const { topLeft, topRight } = this.rectangle.corners
-    const oldX = ball.circle.center.x
 
-    ball.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
+    if (center) {
+      ball.circle.center.x = topLeft.x + PADDLE_CENTER
+    } else {
+      const oldX = ball.circle.center.x
+      ball.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
+    }
+
     ball.circle.center.y = this.rectangle.edges.top.start.y - RADIUS
 
     ball.velocity[0] = 0

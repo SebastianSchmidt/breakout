@@ -14,10 +14,12 @@ const MAX_Y = FIELD_HEIGHT - RADIUS
 export default class Ball {
   circle: Circle
   velocity: [number, number]
+  dropped: boolean
 
   constructor (position: Point) {
     this.circle = new Circle(position, RADIUS)
     this.velocity = [0, 0]
+    this.dropped = false
   }
 
   move () {
@@ -36,12 +38,13 @@ export default class Ball {
       this.collisionFromLeft(width)
     }
 
-    if (center.y + radius >= height) {
-      this.collisionFromAbove(height)
-    }
-
     if (center.x - radius <= 0) {
       this.collisionFromRight(0)
+    }
+
+    // Wenn der Ball unten aus dem Bildschirm gefallen ist:
+    if (center.y - radius >= height) {
+      this.dropped = true
     }
   }
 

@@ -1,4 +1,5 @@
 import State from './state'
+import GameEngine from './engine'
 import ControlsEngine from '../controls/engine'
 import PhysicsEngine from '../physics/engine'
 import GraphicsEngine from '../graphics/engine'
@@ -7,6 +8,7 @@ export default class Loop {
   private state: State
   private controls: ControlsEngine
   private physics: PhysicsEngine
+  private game: GameEngine
   private graphics: GraphicsEngine
   private running: Boolean
 
@@ -14,6 +16,7 @@ export default class Loop {
     this.state = initialState
     this.controls = new ControlsEngine(this.state, root)
     this.physics = new PhysicsEngine(this.state)
+    this.game = new GameEngine(this.state)
     this.graphics = new GraphicsEngine(this.state, root)
     this.running = false
   }
@@ -42,6 +45,7 @@ export default class Loop {
 
     this.controls.process()
     this.physics.calculate(timestamp)
+    this.game.process()
     this.graphics.render(timestamp)
 
     requestAnimationFrame(this.loop.bind(this))

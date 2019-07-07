@@ -8,8 +8,6 @@
 <script>
 import Loop from './loop'
 import State from './state'
-import Ball from './ball'
-import Point from '../physics/objects/point'
 import Brick from './brick'
 import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
@@ -26,10 +24,6 @@ export default {
     })
 
     const state = new State()
-
-    const ball = new Ball(new Point(280, 330))
-    state.balls.push(ball)
-    state.paddle.stick(ball)
 
     for (let row = 3; row < 11; row++) {
       for (let column = 0; column < 14; column++) {
