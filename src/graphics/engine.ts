@@ -58,6 +58,7 @@ export default class Engine {
     this.clearLayers()
     this.renderBricks()
     this.renderBalls()
+    this.renderPaddle()
     this.renderFps()
   }
 
@@ -134,6 +135,17 @@ export default class Engine {
       2 * Math.PI
     )
     layer.fill()
+  }
+
+  private renderPaddle () {
+    const rectangle = this.state.paddle.rectangle
+    this.layer.fillStyle = '#424242'
+    this.layer.fillRect(
+      rectangle.corners.topLeft.x,
+      rectangle.corners.topLeft.y,
+      rectangle.width,
+      rectangle.height
+    )
   }
 
   private renderFps () {

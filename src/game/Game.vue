@@ -27,7 +27,7 @@ export default {
 
     const state = new State()
 
-    const ball = new Ball(new Point(280, 400))
+    const ball = new Ball(new Point(280, 330))
     ball.velocity[0] = 3
     ball.velocity[1] = -3
     state.balls.push(ball)
