@@ -8,12 +8,10 @@ const RADIUS = 5
 export default class Ball {
   circle: Circle
   velocity: [number, number]
-  debug: [number, number][]
 
   constructor (position: Point) {
     this.circle = new Circle(position, RADIUS)
     this.velocity = [0, 0]
-    this.debug = [[this.circle.center.x, this.circle.center.y]]
   }
 
   move () {
