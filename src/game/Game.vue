@@ -28,9 +28,8 @@ export default {
     const state = new State()
 
     const ball = new Ball(new Point(280, 330))
-    ball.velocity[0] = 3
-    ball.velocity[1] = -3
     state.balls.push(ball)
+    state.paddle.stick(ball)
 
     for (let row = 3; row < 11; row++) {
       for (let column = 0; column < 14; column++) {

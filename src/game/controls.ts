@@ -4,37 +4,55 @@ export default class Engine {
   private state: State
   private root: HTMLElement
   private running: boolean
-  private listener?: any
+
+  private moveListener: any
   private paddlePosition?: number
+
+  private clickListener: any
+  private launch: boolean
 
   constructor (state: State, root: HTMLElement) {
     this.state = state
     this.root = root
     this.running = false
+    this.launch = false
+
+    this.moveListener = this.moveHandler.bind(this)
+    this.clickListener = this.clickHandler.bind(this)
   }
 
   start () {
     if (!this.running) {
       this.running = true
-      this.listener = this.mouseMovement.bind(this)
-      this.root.addEventListener('mousemove', this.listener)
+      this.root.addEventListener('mousemove', this.moveListener)
+      this.root.addEventListener('click', this.clickListener)
     }
   }
 
   pause () {
     if (this.running) {
       this.running = false
-      this.root.removeEventListener('mousemove', this.listener)
+      this.root.removeEventListener('mousemove', this.moveListener)
+      this.root.removeEventListener('click', this.clickListener)
     }
   }
 
-  private mouseMovement (event: MouseEvent) {
+  private moveHandler (event: MouseEvent) {
     this.paddlePosition = event.x
+  }
+
+  private clickHandler () {
+    this.launch = true
   }
 
   process () {
     if (this.paddlePosition !== undefined) {
       this.state.paddle.move(this.paddlePosition)
+    }
+
+    if (this.launch) {
+      this.state.paddle.launch()
+      this.launch = false
     }
   }
 }
