@@ -1,7 +1,7 @@
 import State from '../game/state'
 import Ball from '../game/ball'
 import { BRICK_HEIGHT } from '../game/brick'
-import { FIELD_WIDTH, FIELD_HEIGHT } from '../game/field'
+import { Row, FIELD_WIDTH, FIELD_HEIGHT } from '../game/field'
 
 const PHYSICS_TIMESTEP = 1000 / 60
 
@@ -44,27 +44,31 @@ export default class Engine {
 
   private ballStep (ball: Ball) {
     ball.move()
+    this.ballBricksCollision(ball)
+    ball.checkBoundsCollision(FIELD_WIDTH, FIELD_HEIGHT)
+  }
 
+  private ballBricksCollision (ball: Ball) {
     const row = Math.round(ball.circle.center.y / BRICK_HEIGHT)
     const minRow = Math.max(0, row - 1)
     const maxRow = Math.min(17, row + 1)
 
     for (let row = minRow; row <= maxRow; row++) {
-      const bricksRow = this.state.bricks[row]
+      this.checkBrickRow(this.state.bricks[row], ball)
+    }
+  }
 
-      for (let column = 0; column < bricksRow.length; column++) {
-        const brick = bricksRow[column]
+  private checkBrickRow (row: Row, ball: Ball) {
+    for (let column = 0; column < row.length; column++) {
+      const brick = row[column]
 
-        if (brick) {
-          ball.checkBrickCollision(brick)
+      if (brick) {
+        ball.checkBrickCollision(brick)
 
-          if (brick.destroyed) {
-            bricksRow[column] = null
-          }
+        if (brick.destroyed) {
+          row[column] = null
         }
       }
     }
-
-    ball.checkBoundsCollision(FIELD_WIDTH, FIELD_HEIGHT)
   }
 }
