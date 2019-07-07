@@ -1,6 +1,6 @@
-import State from './state'
+import State from '../game/state'
 
-export default class Engine {
+export default class Mouse {
   private state: State
   private root: HTMLElement
   private running: boolean

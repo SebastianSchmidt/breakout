@@ -1,5 +1,5 @@
 import State from './state'
-import ControlsEngine from './controls'
+import ControlsEngine from '../controls/engine'
 import PhysicsEngine from '../physics/engine'
 import GraphicsEngine from '../graphics/engine'
 
