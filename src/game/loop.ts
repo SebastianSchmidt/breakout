@@ -1,22 +1,23 @@
 import State from './state'
 import { BRICK_HEIGHT } from './brick'
 import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
+import GraphicsEngine from '../graphics/engine'
 
 const PHYSICS_TIMESTEP = 1000 / 60
 
 export default class Loop {
-  state: State
-  canvas: CanvasRenderingContext2D
-  running: Boolean
-  lastTimestamp?: number
-  delta: number
-  fps?: number
-  framesThisSecond?: number
-  lastFpsUpdate?: number
+  private state: State
+  private graphics: GraphicsEngine
+  private running: Boolean
+  private lastTimestamp?: number
+  private delta: number
+  private fps?: number
+  private framesThisSecond?: number
+  private lastFpsUpdate?: number
 
-  constructor (initialState: State, canvas: CanvasRenderingContext2D) {
+  constructor (initialState: State, root: HTMLElement) {
     this.state = initialState
-    this.canvas = canvas
+    this.graphics = new GraphicsEngine(root)
     this.running = false
     this.delta = 0
   }
@@ -48,7 +49,7 @@ export default class Loop {
 
     this.calculateFps(timestamp)
     this.physics(timestamp)
-    this.draw()
+    this.graphics.render(this.state, this.fps)
 
     requestAnimationFrame(this.loop.bind(this))
   }
@@ -112,64 +113,5 @@ export default class Loop {
 
       ball.checkBoundsCollision(FIELD_WIDTH, FIELD_HEIGHT)
     })
-  }
-
-  private draw () {
-    const canvas = this.canvas
-
-    // Background
-    canvas.fillStyle = '#E0F2F1'
-    canvas.fillRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
-
-    // Bricks
-    for (let row of this.state.bricks) {
-      for (let brick of row) {
-        if (!brick) {
-          continue
-        }
-
-        const rectangle = brick.rectangle
-
-        const gradient = canvas.createLinearGradient(
-          rectangle.corners.topLeft.x,
-          rectangle.corners.topLeft.y,
-          rectangle.corners.topLeft.x + rectangle.width,
-          rectangle.corners.topLeft.y + rectangle.height
-        )
-        gradient.addColorStop(0, '#004D40')
-        gradient.addColorStop(1, '#4DB6AC')
-        canvas.fillStyle = gradient
-
-        canvas.fillRect(
-          rectangle.corners.topLeft.x,
-          rectangle.corners.topLeft.y,
-          rectangle.width,
-          rectangle.height
-        )
-      }
-    }
-
-    // Balls
-    this.state.balls.forEach(ball => {
-      const circle = ball.circle
-
-      canvas.fillStyle = '#000000'
-      canvas.beginPath()
-      canvas.arc(
-        circle.center.x,
-        circle.center.y,
-        circle.radius,
-        0,
-        2 * Math.PI
-      )
-      canvas.fill()
-    })
-
-    // FPS
-    if (this.fps) {
-      canvas.strokeStyle = '#000000'
-      canvas.textAlign = 'right'
-      canvas.fillText(Math.round(this.fps) + ' FPS', FIELD_WIDTH - 15, 25)
-    }
   }
 }

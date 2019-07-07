@@ -1,10 +1,6 @@
 <template>
   <div>
-    <canvas
-      ref="canvas"
-      :width="FIELD_WIDTH"
-      :height="FIELD_HEIGHT"
-    />
+    <div ref="root" />
     <p><button @click="pause">Pause / Resume</button></p>
   </div>
 </template>
@@ -29,9 +25,6 @@ export default {
       }
     })
 
-    const canvas = this.$refs.canvas
-    const context = canvas.getContext('2d')
-
     const state = new State()
 
     const ball = new Ball(new Point(280, 400))
@@ -45,7 +38,7 @@ export default {
       }
     }
 
-    this.loop = new Loop(state, context)
+    this.loop = new Loop(state, this.$refs.root)
     this.loop.start()
   },
   beforeDestroy () {
