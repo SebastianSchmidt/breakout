@@ -7,14 +7,11 @@ export default class Loop {
   private physics: PhysicsEngine
   private graphics: GraphicsEngine
   private running: Boolean
-  private fps?: number
-  private framesThisSecond?: number
-  private lastFpsUpdate?: number
 
   constructor (initialState: State, root: HTMLElement) {
     this.state = initialState
     this.physics = new PhysicsEngine(this.state)
-    this.graphics = new GraphicsEngine(root)
+    this.graphics = new GraphicsEngine(this.state, root)
     this.running = false
   }
 
@@ -26,9 +23,8 @@ export default class Loop {
   pause () {
     if (this.running) {
       this.running = false
-      this.framesThisSecond = undefined
-      this.lastFpsUpdate = undefined
       this.physics.pause(performance.now())
+      this.graphics.pause()
     }
   }
 
@@ -37,27 +33,9 @@ export default class Loop {
       return
     }
 
-    this.calculateFps(timestamp)
     this.physics.calculate(timestamp)
-    this.graphics.render(this.state, this.fps)
+    this.graphics.render(timestamp)
 
     requestAnimationFrame(this.loop.bind(this))
-  }
-
-  private calculateFps (timestamp: number) {
-    if (!this.lastFpsUpdate) {
-      this.lastFpsUpdate = timestamp
-    }
-
-    if (timestamp > this.lastFpsUpdate + 1000) {
-      this.fps = this.framesThisSecond
-      this.lastFpsUpdate = timestamp
-      this.framesThisSecond = 0
-    }
-
-    if (!this.framesThisSecond) {
-      this.framesThisSecond = 0
-    }
-    this.framesThisSecond++
   }
 }

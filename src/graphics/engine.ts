@@ -4,10 +4,16 @@ import Brick from '../game/brick'
 import Ball from '../game/ball'
 
 export default class Engine {
+  private state: State
   private root: HTMLElement
   private layer: CanvasRenderingContext2D
 
-  constructor (root: HTMLElement) {
+  private fps?: number
+  private framesThisSecond?: number
+  private lastFpsUpdate?: number
+
+  constructor (state: State, root: HTMLElement) {
+    this.state = state
     this.root = this.initRoot(root)
     this.layer = this.createCanvas(0)
   }
@@ -34,6 +40,7 @@ export default class Engine {
     this.root.appendChild(canvas)
 
     const context = canvas.getContext('2d')
+
     if (context) {
       return context
     } else {
@@ -41,19 +48,42 @@ export default class Engine {
     }
   }
 
-  render (state: State, fps?: number) {
+  pause () {
+    this.framesThisSecond = undefined
+    this.lastFpsUpdate = undefined
+  }
+
+  render (timestamp: number) {
+    this.calculateFps(timestamp)
     this.clearLayers()
-    this.renderBricks(state)
-    this.renderBalls(state)
-    this.renderFps(fps)
+    this.renderBricks()
+    this.renderBalls()
+    this.renderFps()
+  }
+
+  private calculateFps (timestamp: number) {
+    if (!this.lastFpsUpdate) {
+      this.lastFpsUpdate = timestamp
+    }
+
+    if (timestamp > this.lastFpsUpdate + 1000) {
+      this.fps = this.framesThisSecond
+      this.lastFpsUpdate = timestamp
+      this.framesThisSecond = 0
+    }
+
+    if (!this.framesThisSecond) {
+      this.framesThisSecond = 0
+    }
+    this.framesThisSecond++
   }
 
   private clearLayers () {
     this.layer.clearRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
   }
 
-  private renderBricks (state: State) {
-    for (let row of state.bricks) {
+  private renderBricks () {
+    for (let row of this.state.bricks) {
       for (let brick of row) {
         if (brick) {
           this.renderBrick(brick)
@@ -84,8 +114,8 @@ export default class Engine {
     )
   }
 
-  private renderBalls (state: State) {
-    state.balls.forEach(ball => {
+  private renderBalls () {
+    this.state.balls.forEach(ball => {
       this.renderBall(ball)
     })
   }
@@ -106,11 +136,11 @@ export default class Engine {
     layer.fill()
   }
 
-  private renderFps (fps?: number) {
-    if (fps) {
+  private renderFps () {
+    if (this.fps) {
       this.layer.strokeStyle = '#000000'
       this.layer.textAlign = 'right'
-      this.layer.fillText(Math.round(fps) + ' FPS', FIELD_WIDTH - 15, 25)
+      this.layer.fillText(Math.round(this.fps) + ' FPS', FIELD_WIDTH - 15, 25)
     }
   }
 }
