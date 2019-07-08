@@ -44,6 +44,7 @@ export default class Engine {
 
   private ballStep (ball: Ball) {
     ball.move()
+    ball.checkPaddleCollision(this.state.paddle)
     this.ballBricksCollision(ball)
     ball.checkBoundsCollision(FIELD_WIDTH, FIELD_HEIGHT)
   }
