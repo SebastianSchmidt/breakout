@@ -1,6 +1,5 @@
 import Circle from '../physics/objects/circle'
 import Point from '../physics/objects/point'
-import Line from '../physics/objects/line'
 import Brick from './brick'
 import Paddle from './paddle'
 import rectangleCollision, { Type } from '../physics/collision-detection/circle-rectangle'
