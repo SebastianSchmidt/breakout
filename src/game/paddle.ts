@@ -33,19 +33,42 @@ export default class Paddle {
   stick (ball: Ball, random: boolean = false) {
     this.balls.push(ball)
 
-    const { topLeft, topRight } = this.rectangle.corners
-
     if (random) {
-      ball.circle.center.x = Math.random() * (topRight.x - topLeft.x) + topLeft.x
+      this.stickBallRandomly(ball)
     } else {
-      const oldX = ball.circle.center.x
-      ball.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
+      this.stickBallBasedOnPosition(ball)
     }
 
     ball.circle.center.y = this.rectangle.edges.top.start.y - RADIUS
 
     ball.velocity[0] = 0
     ball.velocity[1] = 0
+  }
+
+  private stickBallRandomly (ball: Ball) {
+    const x = this.rectangle.corners.topLeft.x
+    const width = this.rectangle.width
+
+    let minX
+    let maxX
+
+    if (Math.random() >= 0.5) {
+      // Linker Bereich auf dem Schläger:
+      minX = x + (1 / 12 * width)
+      maxX = x + (2 / 6 * width)
+    } else {
+      // Rechter Bereich auf dem Schläger:
+      minX = x + width - (2 / 6 * width)
+      maxX = x + width - (1 / 12 * width)
+    }
+
+    ball.circle.center.x = Math.random() * (maxX - minX) + minX
+  }
+
+  private stickBallBasedOnPosition (ball: Ball) {
+    const { topLeft, topRight } = this.rectangle.corners
+    const oldX = ball.circle.center.x
+    ball.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
   }
 
   launch () {
