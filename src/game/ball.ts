@@ -1,6 +1,7 @@
 import Circle from '../physics/objects/circle'
 import Point from '../physics/objects/point'
 import Brick from './brick'
+import Paddle from './paddle'
 import rectangleCollision, { Type } from '../physics/collision-detection/circle-rectangle'
 import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
@@ -73,6 +74,31 @@ export default class Ball {
 
     if (collisions.includes(Type.Left)) {
       this.collisionFromLeft(left.start.x)
+    }
+  }
+
+  checkPaddleCollision (paddle: Paddle) {
+    if (paddle.balls.includes(this)) {
+      return
+    }
+
+    const collisions = rectangleCollision(this.circle, paddle.rectangle)
+
+    if (!collisions) {
+      return
+    }
+
+    const { top, right, bottom, left } = paddle.rectangle.edges
+
+    if (collisions.includes(Type.Top)) {
+      // TODO Winkel abhängig von der Position auf dem Schläger verändern.
+      this.collisionFromAbove(top.start.y)
+    } else if (collisions.includes(Type.Right)) {
+      this.collisionFromRight(right.start.x)
+    } else if (collisions.includes(Type.Left)) {
+      this.collisionFromLeft(left.start.x)
+    } else if (collisions.includes(Type.Bottom)) {
+      this.collisionFromBelow(bottom.start.y)
     }
   }
 
