@@ -38,7 +38,7 @@ export default class Mouse {
   }
 
   private moveHandler (event: MouseEvent) {
-    this.paddlePosition = event.x
+    this.paddlePosition = event.clientX
   }
 
   private clickHandler () {
