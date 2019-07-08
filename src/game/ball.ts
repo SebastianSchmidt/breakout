@@ -12,7 +12,7 @@ const MAX_X = FIELD_WIDTH - RADIUS
 const MIN_Y = RADIUS
 const MAX_Y = FIELD_HEIGHT - RADIUS
 
-const BALL_SPEED = 4
+const BALL_SPEED = 5
 
 // 60 Grad
 const MAX_ANGLE = Math.PI / 3
