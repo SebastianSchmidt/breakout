@@ -1,7 +1,7 @@
 import State from '../game/state'
 import Ball from '../game/ball'
-import { BRICK_HEIGHT } from '../game/brick'
-import { Row, FIELD_WIDTH, FIELD_HEIGHT } from '../game/field'
+import { BRICK_HEIGHT, BRICK_WIDTH } from '../game/brick'
+import { Row, FIELD_WIDTH, FIELD_HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../game/field'
 
 const PHYSICS_TIMESTEP = 1000 / 60
 
@@ -52,7 +52,7 @@ export default class Engine {
   private ballBricksCollision (ball: Ball) {
     const row = Math.round(ball.circle.center.y / BRICK_HEIGHT)
     const minRow = Math.max(0, row - 1)
-    const maxRow = Math.min(17, row + 1)
+    const maxRow = Math.min(NUMBER_OF_ROWS - 1, row + 1)
 
     for (let row = minRow; row <= maxRow; row++) {
       this.checkBrickRow(this.state.bricks[row], ball)
@@ -60,15 +60,23 @@ export default class Engine {
   }
 
   private checkBrickRow (row: Row, ball: Ball) {
-    for (let column = 0; column < row.length; column++) {
-      const brick = row[column]
+    const column = Math.round(ball.circle.center.x / BRICK_WIDTH)
+    const minColumn = Math.max(0, column - 1)
+    const maxColumn = Math.min(NUMBER_OF_COLUMNS - 1, column + 1)
 
-      if (brick) {
-        ball.checkBrickCollision(brick)
+    for (let column = minColumn; column <= maxColumn; column++) {
+      this.checkBrickCell(row, column, ball)
+    }
+  }
 
-        if (brick.destroyed) {
-          row[column] = null
-        }
+  private checkBrickCell (row: Row, column: number, ball: Ball) {
+    const brick = row[column]
+
+    if (brick) {
+      ball.checkBrickCollision(brick)
+
+      if (brick.destroyed) {
+        row[column] = null
       }
     }
   }
