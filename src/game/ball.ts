@@ -1,5 +1,6 @@
 import Circle from '../physics/objects/circle'
 import Point from '../physics/objects/point'
+import Line from '../physics/objects/line'
 import Brick from './brick'
 import Paddle from './paddle'
 import rectangleCollision, { Type } from '../physics/collision-detection/circle-rectangle'
@@ -11,6 +12,11 @@ const MIN_X = RADIUS
 const MAX_X = FIELD_WIDTH - RADIUS
 const MIN_Y = RADIUS
 const MAX_Y = FIELD_HEIGHT - RADIUS
+
+const BALL_SPEED = 4
+
+// 60 Grad
+const MAX_ANGLE = Math.PI / 3
 
 export default class Ball {
   circle: Circle
@@ -88,11 +94,10 @@ export default class Ball {
       return
     }
 
-    const { top, right, bottom, left } = paddle.rectangle.edges
+    const { right, bottom, left } = paddle.rectangle.edges
 
     if (collisions.includes(Type.Top)) {
-      // TODO Winkel abhängig von der Position auf dem Schläger verändern.
-      this.collisionFromAbove(top.start.y)
+      this.paddleCollisionFromAbove(paddle)
     } else if (collisions.includes(Type.Right)) {
       this.collisionFromRight(right.start.x)
     } else if (collisions.includes(Type.Left)) {
@@ -100,6 +105,25 @@ export default class Ball {
     } else if (collisions.includes(Type.Bottom)) {
       this.collisionFromBelow(bottom.start.y)
     }
+  }
+
+  updateVelocityBasedOnPaddlePosition (paddle: Paddle) {
+    const x = paddle.rectangle.edges.top.start.x
+    const length = paddle.rectangle.width
+    const center = length / 2
+
+    const intersection = Math.max(x, Math.min(x + length, this.circle.center.x))
+    const relativeIntersection = x + center - intersection
+    const normalizedIntersection = relativeIntersection / center
+
+    const bounceAngle = normalizedIntersection * MAX_ANGLE
+    this.velocity[0] = -Math.sin(bounceAngle) * BALL_SPEED
+    this.velocity[1] = -Math.cos(bounceAngle) * BALL_SPEED
+  }
+
+  private paddleCollisionFromAbove (paddle: Paddle) {
+    this.updateVelocityBasedOnPaddlePosition(paddle)
+    this.collisionFromAbove(paddle.rectangle.edges.top.start.y)
   }
 
   private collisionFromAbove (maxY: number) {

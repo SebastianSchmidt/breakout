@@ -54,9 +54,7 @@ export default class Paddle {
     }
 
     for (let ball of this.balls) {
-      // TODO Abhängig von der Position auf dem Schläger berechnen.
-      ball.velocity[0] = 3
-      ball.velocity[1] = -3
+      ball.updateVelocityBasedOnPaddlePosition(this)
     }
     this.balls = []
   }
