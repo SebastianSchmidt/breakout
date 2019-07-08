@@ -4,7 +4,7 @@ import Brick from './brick'
 import rectangleCollision, { Type } from '../physics/collision-detection/circle-rectangle'
 import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
-export const RADIUS = 5
+export const RADIUS = 7
 
 const MIN_X = RADIUS
 const MAX_X = FIELD_WIDTH - RADIUS
