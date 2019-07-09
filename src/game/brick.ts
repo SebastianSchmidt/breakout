@@ -1,16 +1,18 @@
-import Rectangle from '../physics/objects/rectangle'
-import Point from '../physics/objects/point'
+import Physics from '@/physics/brick'
+import Graphics from '@/graphics/brick'
 
 export const BRICK_WIDTH = 40
 export const BRICK_HEIGHT = 20
 
 export default class Brick {
-  rectangle: Rectangle
+  physics: Physics
+  graphics: Graphics
+
   destroyed: boolean
 
   constructor (row: number, column: number) {
-    const position = new Point(column * BRICK_WIDTH, row * BRICK_HEIGHT)
-    this.rectangle = new Rectangle(position, BRICK_WIDTH, BRICK_HEIGHT)
+    this.physics = new Physics(row, column)
+    this.graphics = new Graphics(this)
     this.destroyed = false
   }
 

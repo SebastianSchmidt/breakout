@@ -131,7 +131,7 @@ export default class BallPhysics {
   }
 
   private checkBrickCollision (brick: Brick) {
-    const collisions = rectangleCollision(this.circle, brick.rectangle)
+    const collisions = rectangleCollision(this.circle, brick.physics.rectangle)
 
     if (!collisions) {
       return
@@ -139,7 +139,7 @@ export default class BallPhysics {
 
     brick.hitByBall()
 
-    const { top, right, bottom, left } = brick.rectangle.edges
+    const { top, right, bottom, left } = brick.physics.rectangle.edges
 
     if (collisions.includes(Type.Top)) {
       this.collisionFromAbove(top.start.y)

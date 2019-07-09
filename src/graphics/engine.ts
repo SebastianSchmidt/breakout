@@ -91,32 +91,10 @@ export default class Engine {
     for (let row of this.state.bricks) {
       for (let brick of row) {
         if (brick) {
-          this.renderBrick(brick)
+          brick.graphics.draw(this.layer)
         }
       }
     }
-  }
-
-  private renderBrick (brick: Brick) {
-    const layer = this.layer
-    const rectangle = brick.rectangle
-
-    const gradient = layer.createLinearGradient(
-      rectangle.corners.topLeft.x,
-      rectangle.corners.topLeft.y,
-      rectangle.corners.topLeft.x + rectangle.width,
-      rectangle.corners.topLeft.y + rectangle.height
-    )
-    gradient.addColorStop(0, '#004D40')
-    gradient.addColorStop(1, '#4DB6AC')
-    layer.fillStyle = gradient
-
-    layer.fillRect(
-      rectangle.corners.topLeft.x,
-      rectangle.corners.topLeft.y,
-      rectangle.width,
-      rectangle.height
-    )
   }
 
   private renderBalls () {
