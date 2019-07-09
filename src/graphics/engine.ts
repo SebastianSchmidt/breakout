@@ -1,7 +1,5 @@
-import { FIELD_WIDTH, FIELD_HEIGHT } from '../game/field'
-import State from '../game/state'
-import Brick from '../game/brick'
-import Ball from '../game/ball'
+import { FIELD_WIDTH, FIELD_HEIGHT } from '@/game/field'
+import State from '@/game/state'
 
 export default class Engine {
   private state: State
@@ -104,14 +102,7 @@ export default class Engine {
   }
 
   private renderPaddle () {
-    const rectangle = this.state.paddle.rectangle
-    this.layer.fillStyle = '#424242'
-    this.layer.fillRect(
-      rectangle.corners.topLeft.x,
-      rectangle.corners.topLeft.y,
-      rectangle.width,
-      rectangle.height
-    )
+    this.state.paddle.graphics.draw(this.layer)
   }
 
   private renderFps () {

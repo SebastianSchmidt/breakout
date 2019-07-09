@@ -10,10 +10,10 @@ import rectangleCollision, { Type } from './collision-detection/circle-rectangle
 
 export const RADIUS = 7
 
-const MIN_X = RADIUS
-const MAX_X = FIELD_WIDTH - RADIUS
-const MIN_Y = RADIUS
-const MAX_Y = FIELD_HEIGHT - RADIUS
+export const MIN_X = RADIUS
+export const MAX_X = FIELD_WIDTH - RADIUS
+export const MIN_Y = RADIUS
+export const MAX_Y = FIELD_HEIGHT - RADIUS
 
 const BALL_SPEED = 5
 
@@ -38,31 +38,31 @@ export default class BallPhysics {
     this.checkBoundsCollision()
   }
 
-  // ------------------------------
+  // ------------------------------------------------------------
   // Movement
-  // ------------------------------
+  // ------------------------------------------------------------
 
   private move () {
     this.circle.center.x += this.velocity[0]
     this.circle.center.y += this.velocity[1]
   }
 
-  // ------------------------------
+  // ------------------------------------------------------------
   // Paddle
-  // ------------------------------
+  // ------------------------------------------------------------
 
   private checkPaddleCollision (paddle: Paddle) {
     if (paddle.balls.includes(this.ball)) {
       return
     }
 
-    const collisions = rectangleCollision(this.circle, paddle.rectangle)
+    const collisions = rectangleCollision(this.circle, paddle.physics.rectangle)
 
     if (!collisions) {
       return
     }
 
-    const { right, bottom, left } = paddle.rectangle.edges
+    const { right, bottom, left } = paddle.physics.rectangle.edges
 
     if (collisions.includes(Type.Top)) {
       this.paddleCollisionFromAbove(paddle)
@@ -77,12 +77,12 @@ export default class BallPhysics {
 
   private paddleCollisionFromAbove (paddle: Paddle) {
     this.updateVelocityBasedOnPaddlePosition(paddle)
-    this.collisionFromAbove(paddle.rectangle.edges.top.start.y)
+    this.collisionFromAbove(paddle.physics.rectangle.edges.top.start.y)
   }
 
   updateVelocityBasedOnPaddlePosition (paddle: Paddle) {
-    const x = paddle.rectangle.edges.top.start.x
-    const length = paddle.rectangle.width
+    const x = paddle.physics.rectangle.edges.top.start.x
+    const length = paddle.physics.rectangle.width
     const center = length / 2
 
     const intersection = Math.max(x, Math.min(x + length, this.circle.center.x))
@@ -94,9 +94,9 @@ export default class BallPhysics {
     this.velocity[1] = -Math.cos(bounceAngle) * BALL_SPEED
   }
 
-  // ------------------------------
+  // ------------------------------------------------------------
   // Bricks
-  // ------------------------------
+  // ------------------------------------------------------------
 
   private checkBricksCollision (bricks: Field) {
     const row = Math.round(this.circle.center.y / BRICK_HEIGHT)
@@ -158,9 +158,9 @@ export default class BallPhysics {
     }
   }
 
-  // ------------------------------
+  // ------------------------------------------------------------
   // Bounds
-  // ------------------------------
+  // ------------------------------------------------------------
 
   private checkBoundsCollision () {
     const { center, radius } = this.circle
@@ -183,9 +183,9 @@ export default class BallPhysics {
     }
   }
 
-  // ------------------------------
+  // ------------------------------------------------------------
   // Collision helper methods
-  // ------------------------------
+  // ------------------------------------------------------------
 
   private collisionFromAbove (maxY: number) {
     this.circle.center.y = Math.max(maxY - this.circle.radius, MIN_Y)

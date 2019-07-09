@@ -47,11 +47,11 @@ export default class Mouse {
 
   process () {
     if (this.paddlePosition !== undefined) {
-      this.state.paddle.move(this.paddlePosition)
+      this.state.paddle.controls.move(this.paddlePosition)
     }
 
     if (this.launch) {
-      this.state.paddle.launch()
+      this.state.paddle.controls.launch()
       this.launch = false
     }
   }
