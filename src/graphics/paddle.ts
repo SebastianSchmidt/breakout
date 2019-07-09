@@ -7,7 +7,7 @@ export default class PaddleGraphics {
     this.paddle = paddle
   }
 
-  draw (layer: CanvasRenderingContext2D) {
+  render (layer: CanvasRenderingContext2D) {
     const rectangle = this.paddle.physics.rectangle
     const { x, y } = rectangle.corners.topLeft
     const { width, height } = rectangle

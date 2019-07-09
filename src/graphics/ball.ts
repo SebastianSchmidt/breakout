@@ -7,7 +7,7 @@ export default class BallGraphics {
     this.ball = ball
   }
 
-  draw (layer: CanvasRenderingContext2D) {
+  render (layer: CanvasRenderingContext2D) {
     const { center, radius } = this.ball.physics.circle
 
     layer.fillStyle = '#000000'

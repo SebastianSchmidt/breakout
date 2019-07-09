@@ -4,7 +4,9 @@ import State from '@/game/state'
 export default class Engine {
   private state: State
   private root: HTMLElement
-  private layer: CanvasRenderingContext2D
+
+  private bricksLayer: CanvasRenderingContext2D
+  private dynamicLayer: CanvasRenderingContext2D
 
   private fps?: number
   private framesThisSecond?: number
@@ -13,7 +15,8 @@ export default class Engine {
   constructor (state: State, root: HTMLElement) {
     this.state = state
     this.root = this.initRoot(root)
-    this.layer = this.createCanvas(0)
+    this.bricksLayer = this.createCanvas(0)
+    this.dynamicLayer = this.createCanvas(1)
   }
 
   private initRoot (root: HTMLElement) {
@@ -57,10 +60,10 @@ export default class Engine {
 
   render (timestamp: number) {
     this.calculateFps(timestamp)
-    this.clearLayers()
     this.renderBricks()
-    this.renderBalls()
+    this.clearDynamicLayer()
     this.renderPaddle()
+    this.renderBalls()
     this.renderFps()
   }
 
@@ -81,35 +84,35 @@ export default class Engine {
     this.framesThisSecond++
   }
 
-  private clearLayers () {
-    this.layer.clearRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
-  }
-
   private renderBricks () {
     for (let row of this.state.bricks) {
       for (let brick of row) {
         if (brick) {
-          brick.graphics.draw(this.layer)
+          brick.graphics.render(this.bricksLayer)
         }
       }
     }
   }
 
-  private renderBalls () {
-    this.state.balls.forEach(ball => {
-      ball.graphics.draw(this.layer)
-    })
+  private clearDynamicLayer () {
+    this.dynamicLayer.clearRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT)
   }
 
   private renderPaddle () {
-    this.state.paddle.graphics.draw(this.layer)
+    this.state.paddle.graphics.render(this.dynamicLayer)
+  }
+
+  private renderBalls () {
+    this.state.balls.forEach(ball => {
+      ball.graphics.render(this.dynamicLayer)
+    })
   }
 
   private renderFps () {
     if (this.fps) {
-      this.layer.strokeStyle = '#000000'
-      this.layer.textAlign = 'right'
-      this.layer.fillText(Math.round(this.fps) + ' FPS', FIELD_WIDTH - 15, 25)
+      this.dynamicLayer.strokeStyle = '#000000'
+      this.dynamicLayer.textAlign = 'right'
+      this.dynamicLayer.fillText(Math.round(this.fps) + ' FPS', FIELD_WIDTH - 15, 25)
     }
   }
 }
