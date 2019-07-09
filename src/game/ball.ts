@@ -1,5 +1,5 @@
-import Physics from '@/physics/ball'
 import Graphics from '@/graphics/ball'
+import Physics from '@/physics/ball'
 
 export default class Ball {
   physics: Physics

@@ -1,4 +1,4 @@
-import { requirePositiveNumber, requireNonNegativeNumber } from './utils'
+import { requireNonNegativeNumber, requirePositiveNumber } from './utils'
 
 describe('requirePositiveNumber', () => {
   test('returns value when value is greater than zero', () => {

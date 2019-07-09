@@ -1,6 +1,6 @@
-import Point from './point'
-import Line, { Orientation } from './line'
 import { requirePositiveNumber } from '../utils'
+import Line, { Orientation } from './line'
+import Point from './point'
 
 const Horizontal = Orientation.Horizontal
 const Vertical = Orientation.Vertical

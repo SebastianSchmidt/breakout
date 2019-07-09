@@ -1,6 +1,6 @@
-import detectCollision from './point-rectangle'
-import Rectangle from '../objects/rectangle'
 import Point from '../objects/point'
+import Rectangle from '../objects/rectangle'
+import detectCollision from './point-rectangle'
 
 const rectangle = new Rectangle(new Point(2, 3), 4, 2)
 

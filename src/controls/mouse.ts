@@ -1,4 +1,4 @@
-import State from '../game/state'
+import State from '@/game/state'
 
 export default class Mouse {
   private state: State

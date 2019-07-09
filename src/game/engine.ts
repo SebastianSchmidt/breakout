@@ -1,5 +1,5 @@
-import State from './state'
 import Ball from './ball'
+import State from './state'
 
 export default class Engine {
   private state: State

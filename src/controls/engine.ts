@@ -1,4 +1,4 @@
-import State from '../game/state'
+import State from '@/game/state'
 import MouseControls from './mouse'
 
 export default class Engine {

@@ -1,8 +1,8 @@
-import State from './state'
+import ControlsEngine from '@/controls/engine'
+import GraphicsEngine from '@/graphics/engine'
+import PhysicsEngine from '@/physics/engine'
 import GameEngine from './engine'
-import ControlsEngine from '../controls/engine'
-import PhysicsEngine from '../physics/engine'
-import GraphicsEngine from '../graphics/engine'
+import State from './state'
 
 export default class Loop {
   private state: State

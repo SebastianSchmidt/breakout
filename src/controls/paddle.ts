@@ -1,8 +1,8 @@
-import Paddle from '@/game/paddle'
 import Ball from '@/game/ball'
 import { FIELD_WIDTH } from '@/game/field'
+import Paddle from '@/game/paddle'
+import { MAX_X as MAX_BALL_X, MIN_X as MIN_BALL_X } from '@/physics/ball'
 import { PADDLE_WIDTH } from '@/physics/paddle'
-import { MIN_X as MIN_BALL_X, MAX_X as MAX_BALL_X } from '@/physics/ball'
 
 const PADDLE_CENTER = PADDLE_WIDTH / 2
 

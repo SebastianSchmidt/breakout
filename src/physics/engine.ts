@@ -1,4 +1,4 @@
-import State from '../game/state'
+import State from '@/game/state'
 
 const PHYSICS_TIMESTEP = 1000 / 60
 

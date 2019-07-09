@@ -1,8 +1,8 @@
-import Ball from './ball'
-import Physics from '@/physics/paddle'
-import Graphics from '@/graphics/paddle'
 import Controls from '@/controls/paddle'
+import Graphics from '@/graphics/paddle'
 import { RADIUS } from '@/physics/ball'
+import Physics from '@/physics/paddle'
+import Ball from './ball'
 
 export default class Paddle {
   physics: Physics

@@ -1,4 +1,4 @@
-import { FIELD_WIDTH, FIELD_HEIGHT } from '@/game/field'
+import { FIELD_HEIGHT, FIELD_WIDTH } from '@/game/field'
 import State from '@/game/state'
 
 export default class Engine {

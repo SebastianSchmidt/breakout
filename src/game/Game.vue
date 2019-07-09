@@ -6,10 +6,10 @@
 </template>
 
 <script>
+import Brick from './brick'
+import { FIELD_HEIGHT, FIELD_WIDTH } from './field'
 import Loop from './loop'
 import State from './state'
-import Brick from './brick'
-import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
 
 export default {
   data: () => ({

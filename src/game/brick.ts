@@ -1,5 +1,5 @@
-import Physics from '@/physics/brick'
 import Graphics from '@/graphics/brick'
+import Physics from '@/physics/brick'
 
 export const BRICK_WIDTH = 40
 export const BRICK_HEIGHT = 20

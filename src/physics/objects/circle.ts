@@ -1,5 +1,5 @@
-import Point from './point'
 import { requirePositiveNumber } from '../utils'
+import Point from './point'
 
 export default class Circle {
   public _center: Point

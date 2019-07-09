@@ -1,12 +1,11 @@
 import Ball from '@/game/ball'
-import State from '@/game/state'
+import Brick, { BRICK_HEIGHT, BRICK_WIDTH } from '@/game/brick'
+import Field, { FIELD_HEIGHT, FIELD_WIDTH, NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, Row } from '@/game/field'
 import Paddle from '@/game/paddle'
-import Brick, { BRICK_WIDTH, BRICK_HEIGHT } from '@/game/brick'
-import Field, { Row, FIELD_WIDTH, FIELD_HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '@/game/field'
-
+import State from '@/game/state'
+import rectangleCollision, { Type } from './collision-detection/circle-rectangle'
 import Circle from './objects/circle'
 import Point from './objects/point'
-import rectangleCollision, { Type } from './collision-detection/circle-rectangle'
 
 export const RADIUS = 7
 

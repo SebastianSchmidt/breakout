@@ -1,7 +1,7 @@
+import { BRICK_HEIGHT } from '@/game/brick'
+import { FIELD_HEIGHT, FIELD_WIDTH } from '@/game/field'
 import Point from './objects/point'
 import Rectangle from './objects/rectangle'
-import { BRICK_HEIGHT } from '@/game/brick'
-import { FIELD_WIDTH, FIELD_HEIGHT } from '@/game/field'
 
 export const PADDLE_WIDTH = 60
 export const PADDLE_HEIGHT = BRICK_HEIGHT

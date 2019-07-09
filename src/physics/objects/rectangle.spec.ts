@@ -1,6 +1,6 @@
-import Rectangle from './rectangle'
-import Point from './point'
 import Line, { Orientation } from './line'
+import Point from './point'
+import Rectangle from './rectangle'
 
 const Horizontal = Orientation.Horizontal
 const Vertical = Orientation.Vertical
