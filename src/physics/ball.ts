@@ -120,12 +120,8 @@ export default class BallPhysics {
   private checkBrickCell (row: Row, column: number) {
     const brick = row[column]
 
-    if (brick) {
+    if (brick && !brick.destroyed) {
       this.checkBrickCollision(brick)
-
-      if (brick.destroyed) {
-        row[column] = null
-      }
     }
   }
 
