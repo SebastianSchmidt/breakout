@@ -2,7 +2,8 @@ import Rectangle from '../physics/objects/rectangle'
 import Point from '../physics/objects/point'
 import { BRICK_HEIGHT } from './brick'
 import { FIELD_WIDTH, FIELD_HEIGHT } from './field'
-import Ball, { RADIUS } from './ball'
+import Ball from './ball'
+import { RADIUS } from '@/physics/ball'
 
 export const PADDLE_WIDTH = 60
 export const PADDLE_HEIGHT = BRICK_HEIGHT
@@ -39,10 +40,10 @@ export default class Paddle {
       this.stickBallBasedOnPosition(ball)
     }
 
-    ball.circle.center.y = this.rectangle.edges.top.start.y - RADIUS
+    ball.physics.circle.center.y = this.rectangle.edges.top.start.y - RADIUS
 
-    ball.velocity[0] = 0
-    ball.velocity[1] = 0
+    ball.physics.velocity[0] = 0
+    ball.physics.velocity[1] = 0
   }
 
   private stickBallRandomly (ball: Ball) {
@@ -62,13 +63,13 @@ export default class Paddle {
       maxX = x + width - (1 / 12 * width)
     }
 
-    ball.circle.center.x = Math.random() * (maxX - minX) + minX
+    ball.physics.circle.center.x = Math.random() * (maxX - minX) + minX
   }
 
   private stickBallBasedOnPosition (ball: Ball) {
     const { topLeft, topRight } = this.rectangle.corners
-    const oldX = ball.circle.center.x
-    ball.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
+    const oldX = ball.physics.circle.center.x
+    ball.physics.circle.center.x = Math.min(topRight.x, Math.max(topLeft.x, oldX))
   }
 
   launch () {
@@ -77,7 +78,7 @@ export default class Paddle {
     }
 
     for (let ball of this.balls) {
-      ball.updateVelocityBasedOnPaddlePosition(this)
+      ball.physics.updateVelocityBasedOnPaddlePosition(this)
     }
     this.balls = []
   }
@@ -96,8 +97,8 @@ export default class Paddle {
   }
 
   private updateBallPosition (ball: Ball, diff: number) {
-    const oldX = ball.circle.center.x
+    const oldX = ball.physics.circle.center.x
     const newX = Math.min(MAX_BALL_X, Math.max(MIN_BALL_X, oldX + diff))
-    ball.circle.center.x = newX
+    ball.physics.circle.center.x = newX
   }
 }

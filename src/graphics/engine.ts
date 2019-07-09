@@ -121,24 +121,8 @@ export default class Engine {
 
   private renderBalls () {
     this.state.balls.forEach(ball => {
-      this.renderBall(ball)
+      ball.graphics.draw(this.layer)
     })
-  }
-
-  private renderBall (ball: Ball) {
-    const layer = this.layer
-    const circle = ball.circle
-
-    layer.fillStyle = '#000000'
-    layer.beginPath()
-    layer.arc(
-      circle.center.x,
-      circle.center.y,
-      circle.radius,
-      0,
-      2 * Math.PI
-    )
-    layer.fill()
   }
 
   private renderPaddle () {

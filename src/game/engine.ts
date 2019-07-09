@@ -1,6 +1,5 @@
 import State from './state'
 import Ball from './ball'
-import Point from '../physics/objects/point'
 
 export default class Engine {
   private state: State
@@ -11,7 +10,7 @@ export default class Engine {
   }
 
   private createBall () {
-    const ball = new Ball(new Point(1, 1))
+    const ball = new Ball()
     this.state.balls.push(ball)
     this.state.paddle.stick(ball, true)
   }
