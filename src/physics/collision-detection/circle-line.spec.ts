@@ -7,7 +7,7 @@ const collision = (x: number, y: number, radius: number, line: Line) =>
   detectCollision(new Circle(new Point(x, y), radius), line)
 
 const testCollision = (line: Line, data: number[][], expected: boolean) =>
-  test.each(data)('[%d, %d]', (x, y, radius) =>
+  test.each(data)('[%d, %d, %d]', (x, y, radius) =>
     expect(collision(x, y, radius, line)).toBe(expected))
 
 describe('horizontal line', () => {
