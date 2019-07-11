@@ -1,4 +1,11 @@
+import color from 'tinycolor2'
 import Brick from '@/game/brick'
+
+const BORDER_SIZE = 3
+
+const COLOR = '#00796B'
+const BORDER_TOP_COLOR = color(COLOR).lighten().toHex8String()
+const BORDER_BOTTOM_COLOR = color(COLOR).darken().toHex8String()
 
 export default class BrickGraphics {
   private brick: Brick
@@ -25,12 +32,25 @@ export default class BrickGraphics {
     const { x, y } = rectangle.corners.topLeft
     const { width, height } = rectangle
 
-    const gradient = layer.createLinearGradient(x, y, x + width, y + height)
-    gradient.addColorStop(0, '#004D40')
-    gradient.addColorStop(1, '#4DB6AC')
-    layer.fillStyle = gradient
-
+    // Border bottom:
+    layer.fillStyle = BORDER_BOTTOM_COLOR
     layer.fillRect(x, y, width, height)
+
+    // Center:
+    layer.fillStyle = COLOR
+    layer.fillRect(x + BORDER_SIZE, y + BORDER_SIZE, width - BORDER_SIZE * 2, height - BORDER_SIZE * 2)
+
+    // Border top:
+    layer.fillStyle = BORDER_TOP_COLOR
+    layer.beginPath()
+    layer.moveTo(x, y)
+    layer.lineTo(x + width, y)
+    layer.lineTo(x + width - BORDER_SIZE, y + BORDER_SIZE)
+    layer.lineTo(x + BORDER_SIZE, y + BORDER_SIZE)
+    layer.lineTo(x + BORDER_SIZE, y + height - BORDER_SIZE)
+    layer.lineTo(x, y + height)
+    layer.lineTo(x, y)
+    layer.fill()
   }
 
   private clear (layer: CanvasRenderingContext2D) {
